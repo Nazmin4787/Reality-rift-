@@ -27,3 +27,4 @@ Thumbs.db
 # Environment variables
 .env
 .env.*
+reality-rift-frontend/node_modules/
