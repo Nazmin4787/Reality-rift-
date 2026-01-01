@@ -1,0 +1,165 @@
+📘 REALITY RIFT – GAME & AI DOCUMENTATION (UPDATED)
+🧱 1️⃣ Introduction
+
+Reality Rift is a psychological puzzle-survival web game based on the Stranger Things – Upside Down theme.
+The objective is to escape through a chain of logical and psychological trap-based levels.
+
+The game tests:
+
+calmness
+
+memory
+
+observation
+
+timing
+
+paradox thinking
+
+resistance under pressure
+
+🧠 AI runs locally/offline using Tiny ML (TensorFlow.js) — no APIs, no cloud.
+
+🕹️ 2️⃣ Game Concept
+
+The player enters a corrupted “reverse-logic” universe.
+To escape, the player must complete 3 puzzle levels → then face final paradox escape.
+
+🎮 Game is UI + cognitive-logic based — no movement, no WASD, controlled only using:
+
+clicks
+
+decisions
+
+timing
+
+observation
+
+🗺️ 3️⃣ Updated Level Flow
+Start Screen
+↓
+Upside-Down Level Map
+↓
+Level 1 – Red Signal / Dead Signal
+↓
+Level 2 – Time Glitch Corridor
+↓
+Level 3 – Christmas Light Paradox
+↓
+FINAL LEVEL – System Paradox – Escape
+↓
+Ending Screen – Real World
+
+
+(🚨 Previous Level 2 + 5 were removed)
+
+🧩 4️⃣ Level Explanation (DETAILED)
+🟥 Level 1 – Red Signal / Dead Signal
+
+Objective: Drag puzzle pieces ONLY when allowed.
+
+Element	Description
+Mechanic	Player drags 3 fragments into central slot
+Control Rule	Allowed ONLY when HUM sound plays
+Trap	Visual effects distract – audio is the true signal
+Lose Condition	Dragging anything during STATIC → reset + flashing screen
+
+🧠 Purpose: tests attention, listening & ignoring visuals
+
+🟦 Level 2 – Time Glitch Corridor
+
+Objective: Find the single real clock among glitching ones.
+
+Element	Description
+Corridor	Series of clocks – most reverse, freeze, loop, glitch
+Logic	Only 1 clock follows real-world time
+Action	Choose door linked to the real-time clock
+
+Lose Condition → Choose glitch door
+Purpose → Tests observation + filtering distraction
+
+🟩 Level 3 – Christmas Light Paradox
+
+Objective: Decode hidden message using correct blinking pattern.
+
+Element	Description
+Wall of Lights	A-Z letters blink on wall
+Fake Lights	Blink fast, change color, spell fake misleading words
+Real Lights	Slow rhythmic blink appears after silence
+Action	Click only 3 real letters to form code
+
+Lose Condition → Clicking fake blinking light
+Purpose → Tests pattern recognition & patience
+
+🟪 FINAL LEVEL – System Paradox
+
+Objective: Escape by understanding paradox logic — no instructions shown.
+
+Component	Description
+Setup	3 doors – Red, Blue, Green
+Instinct Trap	Red looks safe → wrong
+Distraction	Blue flickers → fake tension
+Hidden Correct	Green looks blocked – but opens only when walking BACKWARD
+
+🧠 Rule:
+👉 Correct action = opposite of instinct
+
+Outcome → Escape to Real World
+Purpose → Tests reverse-logic thinking
+
+🧠 5️⃣ Tiny ML – AI Component (Offline)
+
+AI uses TensorFlow.js and runs locally.
+It adapts difficulty based on behavior.
+
+ML Inputs
+Input	Meaning
+clickSpeed	High → panic
+hesitationTime	Long → more control
+mistakeCount	Cognitive overload
+survivalTime	resilience
+Output
+difficulty_level = 0 (easy), 1 (normal), 2 (hard)
+
+Example Logic:
+if (difficulty == 2) {
+  glitchIntensity = "HIGH";
+  whisperSound = true;
+  pressureRate += 2;
+}
+
+
+⚡ Model Architecture:
+
+Dense (3 inputs) → Dense (8 neurons) → Dense (3 outputs softmax)
+
+🧱 6️⃣ System Architecture (Text)
+Frontend: React UI (Screens, Animations, Audio)
+↓
+Game Logic State Machine (levels, timers, traps)
+↓
+TensorFlow.js ML Module (local behavior prediction)
+↓
+Difficulty Controller (adjusts glitches, audio, effects)
+
+🛠️ 7️⃣ Development Phases
+
+1️⃣ UI Skeleton
+2️⃣ Level Map
+3️⃣ Build Level-1
+4️⃣ Build Level-2
+5️⃣ Add Animations & Audio
+6️⃣ Build Final Level
+7️⃣ Add TensorFlow.js Difficulty
+8️⃣ Testing + Bug Fix
+9️⃣ PDF + Demo Video + PPT
+
+🏁 8️⃣ Final Deliverables
+
+✔ Cognitive Web Game
+✔ ML Difficulty Engine
+✔ PDF Documentation
+✔ Architecture Diagram
+✔ 4–5 minute demo video
+✔ PPT for Viva
+✔ GitHub Repo

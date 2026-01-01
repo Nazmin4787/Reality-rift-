@@ -1,0 +1,68 @@
+.map-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 60%, #3a0d2e 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.map-title {
+  color: #ff2e2e;
+  font-size: 2.8rem;
+  font-family: 'Cinzel', serif;
+  margin-bottom: 40px;
+  text-shadow: 0 0 12px #ff2e2e, 0 0 32px #ff2e2e44;
+}
+
+.level-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.level-card {
+  background: rgba(30,0,0,0.85);
+  border: 2px solid #ff2e2e;
+  border-radius: 18px;
+  box-shadow: 0 0 24px 4px #ff2e2e33;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.level-card:hover {
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: 0 0 48px 8px #ff2e2e99;
+}
+.level-number {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #fff;
+  background: #ff2e2e;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px #ff2e2e88;
+}
+.level-info {
+  display: flex;
+  flex-direction: column;
+}
+.level-name {
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.level-desc {
+  color: #ffbaba;
+  font-size: 1rem;
+  font-style: italic;
+}
