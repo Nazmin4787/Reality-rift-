@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import './Hero.css';
 
 const Hero = () => {
@@ -11,6 +12,16 @@ const Hero = () => {
   const [time, setTime] = useState(new Date());
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [creepyText, setCreepyText] = useState('');
+  const [isCracking, setIsCracking] = useState(false);
+  const [showThunder, setShowThunder] = useState(false);
+
+  const handleEnterVoid = () => {
+    setShowThunder(true);
+    setIsCracking(true);
+    setTimeout(() => {
+      navigate('/map');
+    }, 2000);
+  };
 
   // Random Glitch Message Effect
   useEffect(() => {
@@ -90,9 +101,31 @@ const Hero = () => {
     }
   };
 
+  const spores = React.useMemo(() => {
+    const shapes = [
+      'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', // Square/Rect
+      'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)', // Pentagon
+      'polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)', // Trapezoid
+      'polygon(0% 0%, 100% 20%, 80% 100%, 20% 80%)', // Irregular
+      'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)' // Octagon-ish
+    ];
+    
+    return [...Array(100)].map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 20}s`,
+      animationDuration: `${10 + Math.random() * 20}s`,
+      width: `${3 + Math.random() * 5}px`, // Increased size (3px base)
+      height: `${3 + Math.random() * 5}px`, // Independent height
+      opacity: 0.3 + Math.random() * 0.5,
+      clipPath: shapes[Math.floor(Math.random() * shapes.length)]
+    }));
+  }, []);
+
   return (
     <div 
-        className={`crt-container ${glitch ? 'glitch-active' : ''}`}
+        className={`crt-container ${glitch ? 'glitch-active' : ''} ${showThunder ? 'thunder-shake' : ''}`}
         style={{
             '--mouse-x': `${mousePos.x}px`,
             '--mouse-y': `${mousePos.y}px`
@@ -126,12 +159,16 @@ const Hero = () => {
         
         {/* Floating Spores (Upside Down Atmosphere) */}
         <div className="spores-container">
-            {[...Array(30)].map((_, i) => (
-                <div key={i} className="spore" style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animationDuration: `${10 + Math.random() * 10}s`
+            {spores.map((spore) => (
+                <div key={spore.id} className="spore" style={{
+                    left: spore.left,
+                    top: spore.top,
+                    width: spore.width,
+                    height: spore.height,
+                    opacity: spore.opacity,
+                    animationDelay: spore.animationDelay,
+                    animationDuration: spore.animationDuration,
+                    clipPath: spore.clipPath
                 }} />
             ))}
         </div>
@@ -192,14 +229,30 @@ const Hero = () => {
         {/* Main Title Section */}
         <div className="center-stage">
             <div className="title-wrapper">
-                <h1 
+                <motion.h1 
                     className="main-title" 
                     data-text="REALITY RIFT"
                     onMouseEnter={playWhisper}
                     onMouseLeave={stopWhisper}
+                    animate={{ 
+                        rotateX: [10, -5, 10],
+                        rotateY: [-10, 5, -10],
+                        z: [0, 30, 0],
+                        textShadow: [
+                            "3px 3px 0px #3d0000, 0 0 5px var(--crt-red), 0 0 15px var(--crt-red)",
+                            "-3px 3px 0px #3d0000, 0 0 10px var(--crt-red), 0 0 20px var(--crt-red)",
+                            "3px 3px 0px #3d0000, 0 0 5px var(--crt-red), 0 0 15px var(--crt-red)"
+                        ]
+                    }}
+                    transition={{
+                        duration: 6,
+                        ease: "easeInOut",
+                        repeat: Infinity,
+                    }}
+                    style={{ transformStyle: "preserve-3d" }}
                 >
                     REALITY RIFT
-                </h1>
+                </motion.h1>
                 <div className="rift-tear"></div>
             </div>
             
@@ -231,7 +284,7 @@ const Hero = () => {
                 <div className="disclaimer">By entering, you consent to cognitive monitoring.</div>
                 <button 
                     className="start-game-btn" 
-                    onClick={() => navigate('/map')}
+                    onClick={handleEnterVoid}
                     style={{
                         '--mouse-x': `${mousePos.x}px`,
                         '--mouse-y': `${mousePos.y}px`

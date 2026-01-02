@@ -48,6 +48,27 @@
 }
 
 /* Vecna Clock */
+.thunder-shake {
+    animation: thunder-vibrate 0.05s linear infinite, thunder-flicker 0.1s linear infinite;
+}
+
+@keyframes thunder-vibrate {
+    0% { transform: scale(1.1) translate(0, 0) rotate(0deg); }
+    20% { transform: scale(1.1) translate(-25px, 25px) rotate(-4deg); }
+    40% { transform: scale(1.1) translate(25px, -25px) rotate(4deg); }
+    60% { transform: scale(1.1) translate(-25px, -25px) rotate(-4deg); }
+    80% { transform: scale(1.1) translate(25px, 25px) rotate(4deg); }
+    100% { transform: scale(1.1) translate(0, 0) rotate(0deg); }
+}
+
+@keyframes thunder-flicker {
+    0% { filter: brightness(1) hue-rotate(0deg); }
+    25% { filter: brightness(2) hue-rotate(10deg); }
+    50% { filter: brightness(0.5) hue-rotate(-10deg); }
+    75% { filter: brightness(1.5) hue-rotate(5deg); }
+    100% { filter: brightness(1) hue-rotate(0deg); }
+}
+
 .vecna-clock {
     position: absolute;
     top: 50%;
@@ -343,20 +364,48 @@
   transform: translateY(-20px);
 }
 
+.title-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 10px 0;
+}
+
+.title-wrapper::before,
+.title-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border: 1px solid var(--crt-red);
+  box-shadow: 0 0 5px var(--crt-red);
+  background: transparent;
+}
+
+.title-wrapper::before {
+  top: -15px;
+}
+
+.title-wrapper::after {
+  bottom: -15px;
+}
+
 /* Title Styling with Glitch Effect */
 .main-title {
-  font-family: 'Creepster', cursive; /* Stranger Things vibe font */
-  font-size: 8rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 6rem;
   margin: 0;
-  color: var(--crt-red);
+  color: transparent;
+  -webkit-text-stroke: 1px var(--crt-red);
   text-shadow: 
-    0 0 10px var(--crt-red),
-    0 0 20px var(--crt-red),
-    0 0 40px var(--crt-red);
+    0 0 5px var(--crt-red),
+    0 0 15px var(--crt-red);
   letter-spacing: 5px;
   position: relative;
   line-height: 1;
   z-index: 2;
+  text-transform: uppercase;
 }
 
 .rift-tear {
@@ -392,13 +441,15 @@
 }
 
 .main-title::before {
-  color: #0ff;
+  color: transparent;
+  -webkit-text-stroke: 2px #0ff;
   z-index: -1;
   animation: glitch-effect-1 2s infinite linear alternate-reverse;
 }
 
 .main-title::after {
-  color: #f0f;
+  color: transparent;
+  -webkit-text-stroke: 2px #f0f;
   z-index: -2;
   animation: glitch-effect-2 3s infinite linear alternate-reverse;
 }
@@ -460,32 +511,28 @@
 	pointer-events: none;
 	z-index: 1;
 	overflow: hidden;
+    perspective: 1000px;
 }
 
 .spore {
 	position: absolute;
-	width: 4px;
-	height: 4px;
-	background: rgba(200, 200, 200, 0.5);
-	border-radius: 50%;
-	box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+	background: rgba(200, 210, 220, 0.8);
 	animation: floatSpore linear infinite;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4)) blur(0.5px);
 }
 
 @keyframes floatSpore {
 	0% {
-		transform: translateY(100vh) translateX(0) rotate(0deg);
-		opacity: 0;
+		transform: translate(0, 0) rotate(0deg);
 	}
-	10% {
-		opacity: 0.8;
+	33% {
+		transform: translate(15px, 15px) rotate(120deg);
 	}
-	90% {
-		opacity: 0.8;
+	66% {
+		transform: translate(-10px, 30px) rotate(240deg);
 	}
 	100% {
-		transform: translateY(-10vh) translateX(50px) rotate(360deg);
-		opacity: 0;
+		transform: translate(0, 0) rotate(360deg);
 	}
 }
 
@@ -808,4 +855,66 @@
 @keyframes drift {
   0% { transform: translate(0,0) }
   100% { transform: translate(-10px,-20px) }
+}
+
+/* Screen Shatter Effect */
+.screen-shatter {
+    animation: violent-shake 0.5s cubic-bezier(.36,.07,.19,.97) both infinite, red-flash 0.2s ease-in-out infinite;
+    filter: contrast(1.2) brightness(1.5);
+}
+
+@keyframes red-flash {
+    0%, 100% { background-color: var(--crt-bg); box-shadow: inset 0 0 0 0 rgba(255, 0, 0, 0); }
+    50% { background-color: #300; box-shadow: inset 0 0 100px 50px rgba(255, 0, 0, 0.5); }
+}
+
+@keyframes violent-shake {
+  10%, 90% { transform: translate3d(-2px, 0, 0) rotate(1deg); }
+  20%, 80% { transform: translate3d(4px, 0, 0) rotate(-1deg); }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0) rotate(2deg); }
+  40%, 60% { transform: translate3d(8px, 0, 0) rotate(-2deg); }
+}
+
+.crack-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(50, 0, 0, 0.3);
+    mix-blend-mode: hard-light;
+}
+
+.crack-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+}
+
+.crack-line {
+    stroke: #ff0000;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: crack-draw 0.4s ease-out forwards, lightning-pulse 0.1s infinite alternate;
+    filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 15px #ffaa00);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@keyframes lightning-pulse {
+    from { stroke-opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 5px #ff0000) drop-shadow(0 0 15px #ffaa00); }
+    to { stroke-opacity: 0.6; stroke-width: 5; filter: drop-shadow(0 0 10px #ff0000) drop-shadow(0 0 30px #ffaa00); }
+}
+
+@keyframes crack-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
 }
